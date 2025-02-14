@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentbit-config
+data:
+  fluent-bit.conf: |
+    {{ .Values.fluentbit.config.inputs | nindent 4 }}
+    {{ .Values.fluentbit.config.outputs | nindent 4 }}
+
