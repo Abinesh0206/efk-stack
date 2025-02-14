@@ -1,3 +1,4 @@
+{{- if .Values.fluentbit.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,4 +7,4 @@ data:
   fluent-bit.conf: |
     {{ .Values.fluentbit.config.inputs | nindent 4 }}
     {{ .Values.fluentbit.config.outputs | nindent 4 }}
-
+{{- end }}
