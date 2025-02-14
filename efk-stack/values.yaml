@@ -16,7 +16,8 @@ elasticsearch:
     port: 9200
 
 # Fluent Bit Configuration
-fluentbit:
+ fluentbit:
+  enabled: true
   image: fluent/fluent-bit:2.1.0
   config:
     inputs: |
