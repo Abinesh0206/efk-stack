@@ -1,33 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: PersistentVolume
 metadata:
-  name: elasticsearch
-  labels:
-    app: elasticsearch
+  name: elasticsearch-pv
 spec:
-  replicas: {{ .Values.elasticsearch.replicaCount }}
-  selector:
-    matchLabels:
-      app: elasticsearch
-  template:
-    metadata:
-      labels:
-        app: elasticsearch
-    spec:
-      containers:
-        - name: elasticsearch
-          image: {{ .Values.elasticsearch.image }}
-          ports:
-            - containerPort: 9200
-          env:
-            - name: discovery.type
-              value: "single-node"
-          resources:
-            {{- toYaml .Values.elasticsearch.resources | nindent 12 }}
-          volumeMounts:
-            - name: elasticsearch-storage
-              mountPath: /usr/share/elasticsearch/data
-      volumes:
-        - name: elasticsearch-storage
-          persistentVolumeClaim:
-            claimName: elasticsearch-pvc
+  storageClassName: gp2
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/elasticsearch
