@@ -1,12 +1,15 @@
+{{- if .Values.elasticsearch.persistence.enabled }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: elasticsearch-pvc
-  namespace: efk-stack
+  name: {{ .Release.Name }}-elasticsearch-pvc
+  labels:
+    app: elasticsearch
 spec:
-  storageClassName: gp2
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: {{ .Values.elasticsearch.persistence.size }}
+  storageClassName: {{ .Values.elasticsearch.persistence.storageClass }}
+{{- end }}
