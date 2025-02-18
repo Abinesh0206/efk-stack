@@ -1,8 +1,8 @@
 elasticsearch:
   replicaCount: 1
   image:
-    repository: "amazon/opendistro-for-elasticsearch"
-    tag: "7.10.0"
+    repository: "docker.elastic.co/elasticsearch/elasticsearch:8.6.0"
+    tag: "8.6.0"
     pullPolicy: IfNotPresent
   resources:
     requests:
