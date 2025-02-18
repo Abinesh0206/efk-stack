@@ -1,12 +1,17 @@
+{{- if .Values.elasticsearch.persistence.enabled }}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: elasticsearch-pv
+  name: {{ .Release.Name }}-elasticsearch-pv
+  labels:
+    app: elasticsearch
 spec:
-  storageClassName: gp2
   capacity:
-    storage: 10Gi
+    storage: {{ .Values.elasticsearch.persistence.size }}
   accessModes:
     - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ .Values.elasticsearch.persistence.storageClass }}
   hostPath:
     path: /data/elasticsearch
+{{- end }}
