@@ -28,7 +28,7 @@ spec:
         - name: discovery.type
           value: "single-node"
         - name: ES_JAVA_OPTS
-          value: "-Xms1g -Xmx1g"
+          value: "-Xms2g -Xmx2g"
         resources:
 {{ toYaml .Values.elasticsearch.resources | indent 10 }}
         volumeMounts:
