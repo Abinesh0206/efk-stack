@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kibana
+  name: {{ .Release.Name }}-kibana
   labels:
     app: kibana
 spec:
@@ -15,10 +15,13 @@ spec:
         app: kibana
     spec:
       containers:
-        - name: kibana
-          image: {{ .Values.kibana.image }}
-          ports:
-            - containerPort: {{ .Values.kibana.service.port }}
-          env:
-            - name: ELASTICSEARCH_HOSTS
-              value: "http://elasticsearch:9200"
+      - name: kibana
+        image: "{{ .Values.kibana.image.repository }}:{{ .Values.kibana.image.tag }}"
+        imagePullPolicy: {{ .Values.kibana.image.pullPolicy }}
+        ports:
+        - containerPort: 5601
+        resources:
+{{ toYaml .Values.kibana.resources | indent 10 }}
+        env:
+        - name: ELASTICSEARCH_HOSTS
+          value: "http://{{ .Release.Name }}-elasticsearch:9200"
