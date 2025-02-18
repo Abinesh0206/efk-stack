@@ -1,8 +1,7 @@
-{{- if .Values.elasticsearch.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: elasticsearch
+  name: {{ .Release.Name }}-elasticsearch
   labels:
     app: elasticsearch
 spec:
@@ -16,20 +15,18 @@ spec:
         app: elasticsearch
     spec:
       containers:
-        - name: elasticsearch
-          image: {{ .Values.elasticsearch.image }}
-          ports:
-            - containerPort: 9200
-          env:
-            - name: discovery.type
-              value: "single-node"
-          resources:
-            {{- toYaml .Values.elasticsearch.resources | nindent 12 }}
-          volumeMounts:
-            - name: elasticsearch-storage
-              mountPath: /usr/share/elasticsearch/data
-      volumes:
+      - name: elasticsearch
+        image: "{{ .Values.elasticsearch.image.repository }}:{{ .Values.elasticsearch.image.tag }}"
+        imagePullPolicy: {{ .Values.elasticsearch.image.pullPolicy }}
+        ports:
+        - containerPort: 9200
+        - containerPort: 9300
+        resources:
+{{ toYaml .Values.elasticsearch.resources | indent 10 }}
+        volumeMounts:
         - name: elasticsearch-storage
-          persistentVolumeClaim:
-            claimName: elasticsearch-pvc
-{{- end }}
+          mountPath: /usr/share/elasticsearch/data
+      volumes:
+      - name: elasticsearch-storage
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-elasticsearch-pvc
