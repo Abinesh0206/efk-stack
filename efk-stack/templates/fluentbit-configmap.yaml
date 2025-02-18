@@ -1,10 +1,31 @@
-{{- if .Values.fluentbit.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: fluentbit-config
+  name: {{ .Release.Name }}-fluent-bit-config
+  labels:
+    app: fluent-bit
 data:
   fluent-bit.conf: |
-    {{ .Values.fluentbit.config.inputs | nindent 4 }}
-    {{ .Values.fluentbit.config.outputs | nindent 4 }}
-{{- end }}
+    [SERVICE]
+        Flush        1
+        Log_Level    info
+        Daemon       off
+        Parsers_File parsers.conf
+
+    [INPUT]
+        Name tail
+        Path /var/log/containers/*.log
+        Parser docker
+        Tag kube.*
+        Mem_Buf_Limit 5MB
+        Skip_Long_Lines On
+
+    [OUTPUT]
+        Name  es
+        Match *
+        Host  {{ .Release.Name }}-elasticsearch
+        Port  9200
+        Logstash_Format On
+        Logstash_Prefix logstash
+        Replace_Dots On
+        Retry_Limit False
