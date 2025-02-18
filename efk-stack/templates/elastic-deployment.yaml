@@ -33,7 +33,7 @@ spec:
 {{ toYaml .Values.elasticsearch.resources | indent 10 }}
         volumeMounts:
         - name: elasticsearch-storage
-          mountPath: /usr/share/elasticsearch/data
+          mountPath: /data/elasticsearch
       volumes:
       - name: elasticsearch-storage
         persistentVolumeClaim:
