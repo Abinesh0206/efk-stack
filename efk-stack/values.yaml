@@ -4,7 +4,13 @@ elasticsearch:
     repository: "docker.elastic.co/elasticsearch/elasticsearch"
     tag: "7.10.0"
     pullPolicy: IfNotPresent
-  resources: {}
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "500m"
+    limits:
+      memory: "4Gi"
+      cpu: "1"
   persistence:
     enabled: true
     size: "10Gi"
