@@ -30,7 +30,12 @@ spec:
             - name: ES_JAVA_OPTS
               value: "-Xms1g -Xmx1g"
           resources:
-            {{ toYaml .Values.elasticsearch.resources | indent 10 }}
+            requests:
+              memory: "2Gi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "1"
           volumeMounts:
             - name: elasticsearch-storage
               mountPath: /usr/share/elasticsearch/data
