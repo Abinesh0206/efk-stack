@@ -29,10 +29,7 @@ data:
         Type  _doc
         Logstash_Format Off
         Retry_Limit False   # Allows unlimited retries
-        Time_Key time
-        Time_Key_Format %Y-%m-%dT%H:%M:%S
-        HTTP_Max_Retries 10
-        Suppress_Type_Name On
+      
 
   parsers.conf: |
     [PARSER]
