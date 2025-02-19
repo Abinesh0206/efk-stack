@@ -13,10 +13,10 @@ data:
         Parsers_File parsers.conf
 
     [INPUT]
-        Name tail
-        Path /var/log/containers/*.log
-        Parser docker
-        Tag kube.*
+        Name          tail
+        Path          /var/log/containers/*.log
+        Parser        docker
+        Tag           kube.*
         Mem_Buf_Limit 5MB
         Skip_Long_Lines On
 
@@ -28,13 +28,12 @@ data:
         Index fluent-bit
         Type  _doc
         Logstash_Format Off
-        Retry_Limit False   # Allows unlimited retries
-      
+        Retry_Limit False  # Allows unlimited retries
 
   parsers.conf: |
     [PARSER]
-        Name   docker
-        Format json
-        Time_Key time
+        Name        docker
+        Format      json
+        Time_Key    time
         Time_Format %Y-%m-%dT%H:%M:%S.%L
-        Time_Keep On
+        Time_Keep   On
