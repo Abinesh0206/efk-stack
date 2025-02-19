@@ -25,7 +25,6 @@ data:
         Match *
         Host  {{ .Release.Name }}-elasticsearch
         Port  9200
-        Logstash_Format On
-        Logstash_Prefix logstash
-        Replace_Dots On
-        Retry_Limit False
+        Index fluent-bit
+        Type  _doc
+        Logstash_Format Off
