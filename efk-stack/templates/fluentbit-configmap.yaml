@@ -7,10 +7,10 @@ metadata:
 data:
   fluent-bit.conf: |
     [SERVICE]
-        Flush        1
-        Log_Level    info
-        Daemon       off
-        Parsers_File parsers.conf
+        Flush         1
+        Log_Level     info
+        Daemon        off
+        Parsers_File  parsers.conf
 
     [INPUT]
         Name          tail
