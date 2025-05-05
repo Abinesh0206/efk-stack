@@ -24,7 +24,7 @@ spec:
           ports:
             - containerPort: 5601
           resources:
-            {{ toYaml .Values.kibana.resources | indent 12 }}
+{{ toYaml .Values.kibana.resources | indent 12 }}
           env:
             - name: ELASTICSEARCH_HOSTS
               value: "http://{{ .Release.Name }}-elasticsearch:9200"
