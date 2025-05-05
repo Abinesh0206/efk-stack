@@ -29,6 +29,25 @@ spec:
             drop:
               - ALL
           readOnlyRootFilesystem: true
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 2020
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 2020
+          initialDelaySeconds: 5
+          periodSeconds: 15
+          timeoutSeconds: 3
+          failureThreshold: 2
+        ports:
+        - containerPort: 2020
+          name: http
         resources:
 {{ toYaml .Values.fluentbit.resources | indent 10 }}
         volumeMounts:
