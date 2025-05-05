@@ -32,7 +32,6 @@ spec:
             - name: kibana-data
               mountPath: /usr/share/kibana/data
       volumes:
-  - name: kibana-data
-    persistentVolumeClaim:
-      claimName: {{ .Release.Name }}-kibana-pvc
-
+        - name: kibana-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-kibana-pvc
