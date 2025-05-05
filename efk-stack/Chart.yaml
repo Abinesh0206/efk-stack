@@ -1,5 +1,17 @@
 apiVersion: v2
 name: elastic-stack
-description: A Helm chart for deploying Elasticsearch, Fluent Bit, and Kibana
+description: A Helm chart for deploying Elasticsearch, Fluent Bit, and Kibana using official Helm charts
+type: application
 version: 0.1.0
 appVersion: "8.13.2"
+
+dependencies:
+  - name: elasticsearch
+    version: 8.13.2
+    repository: https://helm.elastic.co
+  - name: kibana
+    version: 8.13.2
+    repository: https://helm.elastic.co
+  - name: fluent-bit
+    version: 0.46.7
+    repository: https://fluent.github.io/helm-charts
