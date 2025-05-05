@@ -48,7 +48,7 @@ kibana:
   image:
     repository: docker.elastic.co/kibana/kibana
     tag: 7.17.3
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   resources:
     limits:
       memory: "512Mi"
