@@ -23,7 +23,7 @@ fluentbit:
   image:
     repository: fluent/fluent-bit
     tag: 2.2.2
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
 
   resources:
     requests:
