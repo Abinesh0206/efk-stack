@@ -56,7 +56,7 @@ kibana:
   replicaCount: 1
   image:
     repository: docker.elastic.co/kibana/kibana
-    tag: 8.13.4
+    tag: 8.13.4  # Fixed tag to avoid "latest" issue
     pullPolicy: Always
   resources:
     limits:
