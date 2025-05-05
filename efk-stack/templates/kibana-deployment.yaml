@@ -63,11 +63,11 @@ spec:
             failureThreshold: 3
           resources:
             limits:
-              cpu: {{ .Values.kibana.resources.limits.cpu | quote }}
-              memory: {{ .Values.kibana.resources.limits.memory | quote }}
+              cpu: "{{ .Values.kibana.resources.limits.cpu }}"
+              memory: "{{ .Values.kibana.resources.limits.memory }}"
             requests:
-              cpu: {{ .Values.kibana.resources.requests.cpu | quote }}
-              memory: {{ .Values.kibana.resources.requests.memory | quote }}
+              cpu: "{{ .Values.kibana.resources.requests.cpu }}"
+              memory: "{{ .Values.kibana.resources.requests.memory }}"
       volumes:
         - name: kibana-data
           persistentVolumeClaim:
