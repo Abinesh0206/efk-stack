@@ -47,7 +47,7 @@ spec:
               mountPath: /usr/share/kibana/data
           livenessProbe:
             httpGet:
-              path: /
+              path: /status
               port: 5601
             initialDelaySeconds: 60
             periodSeconds: 20
@@ -55,7 +55,7 @@ spec:
             failureThreshold: 3
           readinessProbe:
             httpGet:
-              path: /
+              path: /status
               port: 5601
             initialDelaySeconds: 30
             periodSeconds: 10
