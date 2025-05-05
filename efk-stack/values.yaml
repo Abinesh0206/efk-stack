@@ -46,15 +46,17 @@ fluentbit:
 kibana:
   replicaCount: 1
   image:
-    repository: "docker.elastic.co/kibana/kibana"
-    tag: "7.17.3"
+    repository: docker.elastic.co/kibana/kibana
+    tag: 7.17.3
     pullPolicy: IfNotPresent
-  resources: {}
-  service:
-    type: ClusterIP
-    port: 5601
-  ingress:
-    enabled: false
-    hosts:
-      - host: "kibana.example.com"
-        paths: ["/"]
+  resources:
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+  persistence:
+    enabled: true
+    size: 1Gi
+    hostPath: /mnt/data/kibana
