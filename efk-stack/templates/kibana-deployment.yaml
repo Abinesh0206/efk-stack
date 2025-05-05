@@ -62,7 +62,13 @@ spec:
             timeoutSeconds: 5
             failureThreshold: 3
           resources:
-{{ toYaml .Values.kibana.resources | indent 12 }}
+  limits:
+    cpu: {{ .Values.kibana.resources.limits.cpu | quote }}
+    memory: {{ .Values.kibana.resources.limits.memory | quote }}
+  requests:
+    cpu: {{ .Values.kibana.resources.requests.cpu | quote }}
+    memory: {{ .Values.kibana.resources.requests.memory | quote }}
+
       volumes:
         - name: kibana-data
           persistentVolumeClaim:
