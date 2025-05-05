@@ -4,11 +4,13 @@ metadata:
   name: {{ .Release.Name }}-kibana
   labels:
     app: kibana
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"  # NLB annotation for AWS
 spec:
+  type: {{ .Values.kibana.service.type }}  # Should be LoadBalancer in values.yaml
   ports:
-  - port: {{ .Values.kibana.service.port }}
-    targetPort: 5601
-    protocol: TCP
+    - port: {{ .Values.kibana.service.port }}
+      targetPort: 5601
+      protocol: TCP
   selector:
     app: kibana
-  type: {{ .Values.kibana.service.type }}
