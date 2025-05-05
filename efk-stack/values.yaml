@@ -60,3 +60,6 @@ kibana:
     enabled: true
     size: 1Gi
     hostPath: /mnt/data/kibana
+  service:
+    type: ClusterIP
+    port: 5601
