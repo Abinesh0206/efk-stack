@@ -1,10 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-kibana
+  name: {{ include "efk-stack.kibanaFullname" . }}
   namespace: efk
   labels:
     app: kibana
+    {{- include "efk-stack.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.kibana.replicaCount }}
   selector:
@@ -27,18 +28,10 @@ spec:
               mountPath: /mnt/data
       containers:
         - name: kibana
-          image: "{{ .Values.kibana.image.repository }}:{{ .Values.kibana.image.tag }}"
+          image: "{{ .Values.kibana.image.repository }}:{{ .Values.kibana.image.tag | default "8.13.4" }}" # ✅ image tag pinned
           imagePullPolicy: {{ .Values.kibana.image.pullPolicy }}
           ports:
             - containerPort: 5601
-          securityContext:
-            runAsUser: {{ .Values.kibana.securityContext.runAsUser }}
-            runAsGroup: {{ .Values.kibana.securityContext.fsGroup }}
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: false
-            capabilities:
-              drop:
-                - ALL
           env:
             - name: ELASTICSEARCH_HOSTS
               value: "http://{{ .Release.Name }}-elasticsearch:9200"
@@ -49,25 +42,34 @@ spec:
             httpGet:
               path: /status
               port: 5601
-            initialDelaySeconds: 60
-            periodSeconds: 20
-            timeoutSeconds: 5
-            failureThreshold: 3
+            initialDelaySeconds: 120
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /status
               port: 5601
-            initialDelaySeconds: 30
+            initialDelaySeconds: 90
             periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-          resources:
-            limits:
-              cpu: "{{ .Values.kibana.resources.limits.cpu }}"
-              memory: "{{ .Values.kibana.resources.limits.memory }}"
+            timeoutSeconds: 10
+            failureThreshold: 5
+          resources:                            # ✅ Checkov compliance
             requests:
               cpu: "{{ .Values.kibana.resources.requests.cpu }}"
               memory: "{{ .Values.kibana.resources.requests.memory }}"
+            limits:
+              cpu: "{{ .Values.kibana.resources.limits.cpu }}"
+              memory: "{{ .Values.kibana.resources.limits.memory }}"
+          securityContext:                      # ✅ Secure context
+            runAsUser: {{ .Values.kibana.securityContext.runAsUser }}
+            runAsGroup: {{ .Values.kibana.securityContext.fsGroup }}
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - ALL
       volumes:
         - name: kibana-data
           persistentVolumeClaim:
