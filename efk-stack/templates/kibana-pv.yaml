@@ -1,13 +1,11 @@
 apiVersion: v1
-kind: PersistentVolume
+kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-kibana-pv
+  name: {{ .Release.Name }}-kibana-pvc
 spec:
-  capacity:
-    storage: {{ .Values.kibana.persistence.size }}
   accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
+    - {{ .Values.kibana.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.kibana.persistence.size }}
   storageClassName: manual
-  hostPath:
-    path: {{ .Values.kibana.persistence.hostPath }}
