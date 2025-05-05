@@ -21,10 +21,18 @@ elasticsearch:
 
 fluentbit:
   image:
-    repository: "fluent/fluent-bit"
-    tag: "1.6.10"
-    pullPolicy: Always
-  resources: {}
+    repository: fluent/fluent-bit
+    tag: 2.2.2
+    pullPolicy: IfNotPresent
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      cpu: 200m
+      memory: 200Mi
+
   config:
     inputs: |
       [INPUT]
@@ -42,6 +50,7 @@ fluentbit:
           Host elasticsearch-service
           Port 9200
           Index fluentbit
+
 
 kibana:
   replicaCount: 1
