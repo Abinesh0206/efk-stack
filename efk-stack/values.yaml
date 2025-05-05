@@ -23,7 +23,7 @@ fluentbit:
   image:
     repository: "fluent/fluent-bit"
     tag: "1.6.10"
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   resources: {}
   config:
     inputs: |
