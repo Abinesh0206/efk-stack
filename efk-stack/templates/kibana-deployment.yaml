@@ -21,7 +21,8 @@ spec:
         fsGroup: {{ .Values.kibana.securityContext.fsGroup }}
       initContainers:
         - name: fix-permissions
-          image: busybox
+          image: alpine:3.18
+          imagePullPolicy: Always
           command: ["sh", "-c", "mkdir -p /mnt/data && chown -R 1000:1000 /mnt/data"]
           volumeMounts:
             - name: kibana-data
