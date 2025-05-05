@@ -17,6 +17,16 @@ spec:
       securityContext:
         runAsUser: {{ .Values.kibana.securityContext.runAsUser }}
         fsGroup: {{ .Values.kibana.securityContext.fsGroup }}
+
+      # Init container to set permissions
+      initContainers:
+        - name: volume-permission-fix
+          image: busybox
+          command: ["sh", "-c", "chown -R 1000:1000 /usr/share/kibana/data"]
+          volumeMounts:
+            - name: kibana-data
+              mountPath: /usr/share/kibana/data
+
       containers:
         - name: kibana
           image: "{{ .Values.kibana.image.repository }}:{{ .Values.kibana.image.tag }}"
@@ -31,7 +41,8 @@ spec:
           volumeMounts:
             - name: kibana-data
               mountPath: /usr/share/kibana/data
+
       volumes:
         - name: kibana-data
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-kibana-pvc
+          hostPath:
+            path: {{ .Values.kibana.persistence.hostPath }}
