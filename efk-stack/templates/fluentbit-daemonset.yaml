@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: {{ .Release.Name }}-fluent-bit
+  namespace: efk
   labels:
     app: fluent-bit
 spec:
