@@ -4,8 +4,8 @@ metadata:
   name: {{ .Release.Name }}-kibana-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ .Values.kibana.persistence.accessMode }}
   resources:
     requests:
       storage: {{ .Values.kibana.persistence.size }}
-  storageClassName: manual
+  storageClassName: {{ .Values.kibana.persistence.storageClass }}
