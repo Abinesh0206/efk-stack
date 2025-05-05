@@ -26,16 +26,16 @@ spec:
           volumeMounts:
             - name: kibana-data
               mountPath: /mnt/data
-           resources:
+          resources:
             requests:
               memory: "32Mi"
               cpu: "10m"
             limits:
               memory: "64Mi"
-              cpu: "50m"  
+              cpu: "50m"
       containers:
         - name: kibana
-          image: "{{ .Values.kibana.image.repository }}:{{ .Values.kibana.image.tag | default "8.13.4" }}" # ✅ image tag pinned
+          image: "{{ .Values.kibana.image.repository }}:{{ .Values.kibana.image.tag | default "8.13.4" }}"
           imagePullPolicy: {{ .Values.kibana.image.pullPolicy }}
           ports:
             - containerPort: 5601
@@ -61,14 +61,14 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 10
             failureThreshold: 5
-          resources:                            # ✅ Checkov compliance
+          resources:
             requests:
               cpu: "{{ .Values.kibana.resources.requests.cpu }}"
               memory: "{{ .Values.kibana.resources.requests.memory }}"
             limits:
               cpu: "{{ .Values.kibana.resources.limits.cpu }}"
               memory: "{{ .Values.kibana.resources.limits.memory }}"
-          securityContext:                      # ✅ Secure context
+          securityContext:
             runAsUser: {{ .Values.kibana.securityContext.runAsUser }}
             runAsGroup: {{ .Values.kibana.securityContext.fsGroup }}
             runAsNonRoot: true
