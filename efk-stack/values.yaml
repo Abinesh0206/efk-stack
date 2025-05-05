@@ -60,8 +60,8 @@ kibana:
     enabled: true
     size: 1Gi
     accessMode: ReadWriteOnce
-    storageClass: manual
-    hostPath: /mnt/data/kibana
+    storageClass: standard
+  
   service:
     type: ClusterIP
     port: 5601
