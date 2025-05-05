@@ -2,25 +2,25 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-kibana-ingress
-  labels:
-    app: kibana
+  name: {{ .Release.Name }}-kibana
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    {{- toYaml .Values.kibana.ingress.annotations | nindent 4 }}
 spec:
   rules:
-  {{- range .Values.kibana.ingress.hosts }}
-  - host: {{ .host }}
-    http:
-      paths:
-      {{- range .paths }}
-      - path: {{ . }}
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: {{ $.Release.Name }}-kibana
-            port:
-              number: {{ $.Values.kibana.service.port }}
-      {{- end }}
+    - host: {{ .Values.kibana.ingress.hosts | first }}
+      http:
+        paths:
+          - path: {{ .Values.kibana.ingress.path }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-kibana
+                port:
+                  number: 5601
+  {{- if .Values.kibana.ingress.tls }}
+  tls:
+    - secretName: {{ .Values.kibana.ingress.tls.secretName }}
+      hosts:
+        {{- toYaml .Values.kibana.ingress.tls.hosts | nindent 8 }}
   {{- end }}
 {{- end }}
