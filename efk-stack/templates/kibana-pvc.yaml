@@ -1,12 +1,12 @@
-# templates/kibana-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ .Release.Name }}-kibana-pvc
+  namespace: efk
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: manual
   resources:
     requests:
       storage: {{ .Values.kibana.persistence.size }}
+  storageClassName: manual
