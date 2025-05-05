@@ -1,13 +1,11 @@
-{{- if .Values.kibana.persistence.enabled }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ .Release.Name }}-kibana-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ .Values.kibana.persistence.accessMode }}
   resources:
     requests:
       storage: {{ .Values.kibana.persistence.size }}
   storageClassName: {{ .Values.kibana.persistence.storageClass }}
-{{- end }}
