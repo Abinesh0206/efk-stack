@@ -49,6 +49,7 @@ kibana:
     repository: docker.elastic.co/kibana/kibana
     tag: 7.17.3
     pullPolicy: IfNotPresent
+
   resources:
     limits:
       memory: "512Mi"
@@ -56,17 +57,25 @@ kibana:
     requests:
       memory: "256Mi"
       cpu: "250m"
+
   persistence:
     enabled: true
     size: 1Gi
-    hostPath: /mnt/data/kibana
+    accessMode: ReadWriteOnce
+    storageClass: standard
+    hostPath: /mnt/data/kibana  # Optional: only works in single-node dev or if hostPath mounts are permitted
+
   service:
     type: ClusterIP
     port: 5601
+
   ingress:
-    enabled: true  # Enable or disable ingress here
+    enabled: true
     annotations: {}
     path: /
     hosts:
-      - "kibana.example.com"  # Replace with your desired hostname
+      - "kibana.example.com"  # ✅ Replace with your actual domain
 
+  securityContext:
+    runAsUser: 1000
+    fsGroup: 1000
