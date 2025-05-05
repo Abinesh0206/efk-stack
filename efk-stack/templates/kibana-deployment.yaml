@@ -15,14 +15,23 @@ spec:
         app: kibana
     spec:
       securityContext:
-        runAsUser: {{ .Values.kibana.securityContext.runAsUser }}
         fsGroup: {{ .Values.kibana.securityContext.fsGroup }}
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: ["sh", "-c", "mkdir -p /mnt/data && chown -R 1000:1000 /mnt/data"]
+          volumeMounts:
+            - name: kibana-data
+              mountPath: /mnt/data
       containers:
         - name: kibana
           image: "{{ .Values.kibana.image.repository }}:{{ .Values.kibana.image.tag }}"
           imagePullPolicy: {{ .Values.kibana.image.pullPolicy }}
           ports:
             - containerPort: 5601
+          securityContext:
+            runAsUser: {{ .Values.kibana.securityContext.runAsUser }}
+            runAsGroup: {{ .Values.kibana.securityContext.fsGroup }}
           resources:
 {{ toYaml .Values.kibana.resources | indent 12 }}
           env:
