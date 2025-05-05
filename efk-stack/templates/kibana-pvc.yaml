@@ -1,11 +1,12 @@
+# templates/kibana-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ .Release.Name }}-kibana-pvc
 spec:
   accessModes:
-    - {{ .Values.kibana.persistence.accessMode }}
+    - ReadWriteOnce
+  storageClassName: manual
   resources:
     requests:
       storage: {{ .Values.kibana.persistence.size }}
-  storageClassName: {{ .Values.kibana.persistence.storageClass }}
