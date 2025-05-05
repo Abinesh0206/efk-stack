@@ -62,7 +62,7 @@ kibana:
     accessMode: ReadWriteOnce
     storageClass: "gp2"
   service:
-    type: ClusterIP
+    type: Loadbalancer
     port: 5601
   ingress:
     enabled: false
