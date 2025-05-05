@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "efk-stack.kibanaFullname" . }}
+  name: {{ .Release.Name }}-kibana
   namespace: efk
   labels:
     app: kibana
