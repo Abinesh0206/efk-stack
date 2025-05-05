@@ -63,3 +63,14 @@ kibana:
   service:
     type: ClusterIP
     port: 5601
+  ingress:
+    enabled: true  # Set to false if you don't want ingress
+    annotations: {}
+    path: /
+    hosts:
+      - "kibana.example.com"
+    tls:
+      - secretName: kibana-tls
+        hosts:
+          - "kibana.example.com"
+
