@@ -3,7 +3,7 @@ elasticsearch:
   image:
     repository: "docker.elastic.co/elasticsearch/elasticsearch"
     tag: "7.17.3"
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   resources:
     requests:
       memory: "4Gi"
