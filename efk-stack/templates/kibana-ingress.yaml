@@ -3,6 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Release.Name }}-kibana
+  namespace: efk
   annotations:
     {{- toYaml .Values.kibana.ingress.annotations | nindent 4 }}
 spec:
