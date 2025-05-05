@@ -14,10 +14,21 @@ spec:
       labels:
         app: fluent-bit
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 2000
       containers:
       - name: fluent-bit
         image: "{{ .Values.fluentbit.image.repository }}:{{ .Values.fluentbit.image.tag }}"
         imagePullPolicy: {{ .Values.fluentbit.image.pullPolicy }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
         resources:
 {{ toYaml .Values.fluentbit.resources | indent 10 }}
         volumeMounts:
