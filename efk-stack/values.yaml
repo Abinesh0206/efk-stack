@@ -47,7 +47,7 @@ kibana:
   replicaCount: 1
   image:
     repository: "docker.elastic.co/kibana/kibana"
-    tag: "7.10.0"
+    tag: "8.13.2"
     pullPolicy: IfNotPresent
   resources: {}
   service:
