@@ -48,7 +48,7 @@ spec:
                 - ALL
       containers:
         - name: kibana
-          image: "{{ .Values.kibana.image.repository }}:{{ .Values.kibana.image.tag | default \"8.13.4\" }}"
+          image: "{{ .Values.kibana.image.repository }}:{{ .Values.kibana.image.tag | default "8.13.4" }}"
           imagePullPolicy: "{{ .Values.kibana.image.pullPolicy }}"
           ports:
             - containerPort: 5601
