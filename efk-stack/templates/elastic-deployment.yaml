@@ -15,13 +15,21 @@ spec:
       labels:
         app: elasticsearch
     spec:
+      automountServiceAccountToken: false
       securityContext:
         runAsUser: 1000
+        runAsGroup: 1000
         fsGroup: 1000
       containers:
       - name: elasticsearch
         image: "{{ .Values.elasticsearch.image.repository }}:{{ .Values.elasticsearch.image.tag }}"
         imagePullPolicy: {{ .Values.elasticsearch.image.pullPolicy }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: false  # Elasticsearch needs write access
         ports:
         - containerPort: 9200
         - containerPort: 9300
