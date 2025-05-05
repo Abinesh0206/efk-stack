@@ -9,7 +9,7 @@ elasticsearch:
       memory: "4Gi"
       cpu: "500m"
     limits:
-      memory: "8Gi"
+      memory: "6Gi"
       cpu: "1"
   persistence:
     enabled: true
