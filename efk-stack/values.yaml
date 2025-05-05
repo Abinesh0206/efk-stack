@@ -56,11 +56,11 @@ kibana:
     requests:
       memory: "256Mi"
       cpu: "250m"
-  persistence:
+ persistence:
     enabled: true
     size: 1Gi
     accessMode: ReadWriteOnce
-    storageClass: ""
+    storageClass: manual
     hostPath: /mnt/data/kibana
   service:
     type: ClusterIP
