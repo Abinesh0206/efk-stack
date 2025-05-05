@@ -9,4 +9,4 @@ spec:
   resources:
     requests:
       storage: {{ .Values.kibana.persistence.size }}
-  storageClassName: manual
+  storageClassName: {{ .Values.kibana.persistence.storageClass }}
