@@ -18,6 +18,9 @@ elasticsearch:
   securityContext:
     fsGroup: 1000
     runAsUser: 1000
+    xpack.security.enabled: false
+xpack.security.http.ssl.enabled: false
+
 
 fluentbit:
   image:
