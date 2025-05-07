@@ -64,10 +64,10 @@ kibana:
   resources:
     limits:
       memory: "2Gi"
-      cpu: "1"
+      cpu: "2"
     requests:
       memory: "1Gi"
-      cpu: "500m"
+      cpu: "1"
   persistence:
     enabled: true
     size: 1Gi
